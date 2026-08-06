@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة راتب ال BD في Xena شهر 6 2026</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 100%);
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            font-size: 1.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #ff69b4;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+        .lang-toggle {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .lang-btn {
+            background: linear-gradient(135deg, #ff69b4, #ffd700);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            color: #1a0a2e;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.4);
+        }
+        /* ===== TAB SYSTEM ===== */
+        .tab-container { margin-bottom: 25px; }
+        .tab-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 0;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            border-bottom: none;
+            border-radius: 15px 15px 0 0;
+            color: #ff69b4;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #ff69b4;
+            color: #ffd700;
+            box-shadow: 0 -5px 20px rgba(255, 105, 180, 0.2);
+        }
+        .tab-btn:hover:not(.active) {
+            background: rgba(255, 105, 180, 0.1);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        /* ===== CARD STYLES ===== */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+        }
+        .tab-content .card:first-child {
+            border-radius: 0 15px 15px 15px;
+        }
+        .card-title {
+            color: #ff69b4;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 105, 180, 0.3);
+            padding-bottom: 10px;
+        }
+        .form-group { margin-bottom: 20px; }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+            font-weight: 600;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #ff69b4;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.2);
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff69b4, #ffd700);
+            border: none;
+            border-radius: 10px;
+            color: #1a0a2e;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.4);
+        }
+        .result-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        .result-box.show { display: block; }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .result-item:last-child { border-bottom: none; }
+        .result-label { color: #ccc; }
+        .result-value {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .total {
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        .total .result-value {
+            font-size: 1.4em;
+            color: #00ff88;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+            line-height: 1.8;
+        }
+        .alert.show { display: block; }
+        .alert-error {
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid rgba(255, 0, 0, 0.4);
+            color: #ff6b6b;
+        }
+        .alert-success {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: #00ff88;
+        }
+        .alert-warning {
+            background: rgba(255, 165, 0, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            color: #ffd700;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        th, td {
+            padding: 12px 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        th {
+            background: rgba(255, 105, 180, 0.2);
+            color: #ffd700;
+        }
+        tr:nth-child(even) { background: rgba(255, 255, 255, 0.03); }
+        .tier-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        .tier-1 { background: #4a4a4a; }
+        .tier-2 { background: #5a5a5a; }
+        .tier-3 { background: #6a6a6a; }
+        .tier-4 { background: #7a7a7a; }
+        .tier-5 { background: #8a8a8a; color: #1a0a2e; }
+        .tier-6 { background: #ffd700; color: #1a0a2e; }
+        .na-cell { color: #666; font-style: italic; }
+        .month-header { color: #ff69b4; font-size: 0.85em; }
+        .calc-detail {
+            background: rgba(255,255,255,0.03);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        .rule-box {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .rule-box h4 { color: #ffd700; margin-bottom: 10px; }
+        .rule-box ul { line-height: 2; color: #ccc; padding-right: 20px; }
+        .hosts-req-row {
+            background: rgba(255, 105, 180, 0.08) !important;
+            font-weight: bold;
+        }
+        .hosts-req-row td {
+            color: #ff69b4;
+            font-size: 0.88em;
+        }
+        .hosts-req-label {
+            color: #ff69b4;
+            font-weight: bold;
+        }
+        /* Info row showing calculated tier & month in advanced mode */
+        .info-row {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #00ff88;
+            display: none;
+        }
+        .info-row.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="pageTitle">&#128176; حاسبة راتب ال BD في Xena شهر 6 2026</h1>
+        <div class="subtitle" id="pageSub">BD Salary Calculator - Xena Agency</div>
+
+        <div class="lang-toggle">
+            <button class="lang-btn" onclick="toggleLang()" id="langBtn">&#127760; English</button>
+        </div>
+
+        <!-- ===== TAB SYSTEM ===== -->
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab('simple')" id="tabSimple">&#128187; البسيط</button>
+                <button class="tab-btn" onclick="switchTab('advanced')" id="tabAdvanced">&#9881;&#65039; المتقدم</button>
+            </div>
+
+            <!-- ===== SIMPLE TAB ===== -->
+            <div id="tab-simple" class="tab-content active">
+                <div class="card">
+                    <div class="card-title" id="formTitle">&#128202; بيانات الوكالة</div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label id="tierLabel">التير (Tier) / الوكالة</label>
+                            <select id="tier">
+                                <option value="1">Tier 1 - 1M</option>
+                                <option value="2">Tier 2 - 10M</option>
+                                <option value="3">Tier 3 - 30M</option>
+                                <option value="4">Tier 4 - 50M</option>
+                                <option value="5">Tier 5 - 80M</option>
+                                <option value="6">Tier 6 - 100M+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label id="monthLabel">الشهر الحالي (الشهر في الوكالة)</label>
+                            <select id="currentMonth">
+                                <option value="1">الشهر 1</option>
+                                <option value="2">الشهر 2</option>
+                                <option value="3">الشهر 3</option>
+                                <option value="4">الشهر 4</option>
+                                <option value="5">الشهر 5</option>
+                                <option value="6">الشهر 6</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label id="hostsLabel">عدد المضيفين برواتب (الشهر الحالي)</label>
+                        <input type="number" id="currentHosts" min="0" placeholder="10">
+                    </div>
+                    <div class="form-group">
+                        <label id="healthLabel">مستوى صحة الوكالة</label>
+                        <select id="healthLevel">
+                            <option value="excellent">&#1605;&#1605;&#1578;&#1575;&#1586; (Excellent) - 30% &#1605;&#1603;&#1575;&#1601;&#1571;&#1577;</option>
+                            <option value="good">&#1580;&#1610;&#1583; (Good) - 10% &#1605;&#1603;&#1575;&#1601;&#1571;&#1577;</option>
+                            <option value="normal">&#1593;&#1575;&#1583;&#1610; (Normal) - &#1604;&#1575; &#1578;&#1608;&#1580;&#1583; &#1605;&#1603;&#1575;&#1601;&#1571;&#1577;</option>
+                            <option value="unhealthy">&#1594;&#1610;&#1585; &#1589;&#1581;&#1610; (Unhealthy) - &#1582;&#1589;&#1605; 50%</option>
+                            <option value="warning">&#1578;&#1581;&#1584;&#1610;&#1585; (Warning) - &#1587;&#1581;&#1576; &#1585;&#1575;&#1578;&#1576; + &#1578;&#1581;&#1584;&#1610;&#1585;</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="calculate()" id="calcBtn">&#128640; احسب الراتب والمكافأة</button>
+
+                    <div id="AlertBox" class="alert"></div>
+
+                    <div id="ResultBox" class="result-box">
+                        <div class="result-item">
+                            <span class="result-label" id="rl1">الراتب الأساسي:</span>
+                            <span class="result-value" id="BaseSalary">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label" id="rl2">نسبة المكافأة/الخصم:</span>
+                            <span class="result-value" id="BonusPercent">0%</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label" id="rl3">قيمة المكافأة/الخصم:</span>
+                            <span class="result-value" id="BonusValue">$0</span>
+                        </div>
+                        <div class="result-item total">
+                            <span class="result-label" id="rl4">الإجمالي (الأساسي + المكافأة):</span>
+                            <span class="result-value" id="TotalSalary">$0</span>
+                        </div>
+                        <div id="CalcDetail" class="calc-detail"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ADVANCED TAB ===== -->
+            <div id="tab-advanced" class="tab-content">
+                <div class="card">
+                    <div class="card-title" id="advFormTitle">&#9881;&#65039; حساب راتب الوكالة (متقدم)</div>
+
+                    <div class="form-group">
+                        <label id="advTargetLabel">&#127942; تارجت الوكالة (BD)</label>
+                        <input type="text" id="advTarget" placeholder="50,000" oninput="formatTargetInput(this)">
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label id="advCreateDateLabel">&#128197; تاريخ إنشاء الوكالة</label>
+                            <input type="date" id="advCreateDate" min="2026-05-01">
+                        </div>
+                        <div class="form-group">
+                            <label id="advCalcDateLabel">&#128198; تاريخ الحساب (اليوم)</label>
+                            <input type="date" id="advCalcDate">
+                        </div>
+                    </div>
+
+                    <div class="info-row" id="advInfoRow">
+                        <span id="advInfoText"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label id="advHostsLabel">&#128101; عدد المضيفين برواتب (الشهر الحالي)</label>
+                        <input type="number" id="advCurrentHosts" min="0" placeholder="10">
+                    </div>
+                    <div class="form-group">
+                        <label id="advHealthLabel">&#127973; مستوى صحة الوكالة</label>
+                        <select id="advHealthLevel">
+                            <option value="excellent">&#1605;&#1605;&#1578;&#1575;&#1586; (Excellent) - 30% &#1605;&#1603;&#1575;&#1601;&#1571;&#1577;</option>
+                            <option value="good">&#1580;&#1610;&#1583; (Good) - 10% &#1605;&#1603;&#1575;&#1601;&#1571;&#1577;</option>
+                            <option value="normal">&#1593;&#1575;&#1583;&#1610; (Normal) - &#1604;&#1575; &#1578;&#1608;&#1580;&#1583; &#1605;&#1603;&#1575;&#1601;&#1571;&#1577;</option>
+                            <option value="unhealthy">&#1594;&#1610;&#1585; &#1589;&#1581;&#1610; (Unhealthy) - &#1582;&#1589;&#1605; 50%</option>
+                            <option value="warning">&#1578;&#1581;&#1584;&#1610;&#1585; (Warning) - &#1587;&#1581;&#1576; &#1585;&#1575;&#1578;&#1576; + &#1578;&#1581;&#1584;&#1610;&#1585;</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="calculateAdvanced()" id="advCalcBtn">&#128640; احسب الراتب والمكافأة</button>
+
+                    <div id="advAlertBox" class="alert"></div>
+
+                    <div id="advResultBox" class="result-box">
+                        <div class="result-item">
+                            <span class="result-label" id="advRl1">الراتب الأساسي:</span>
+                            <span class="result-value" id="advBaseSalary">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label" id="advRl2">نسبة المكافأة/الخصم:</span>
+                            <span class="result-value" id="advBonusPercent">0%</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label" id="advRl3">قيمة المكافأة/الخصم:</span>
+                            <span class="result-value" id="advBonusValue">$0</span>
+                        </div>
+                        <div class="result-item total">
+                            <span class="result-label" id="advRl4">الإجمالي (الأساسي + المكافأة):</span>
+                            <span class="result-value" id="advTotalSalary">$0</span>
+                        </div>
+                        <div id="advCalcDetail" class="calc-detail"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title" id="tableTitle">&#128203; جدول الرواتب الأساسية</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th id="th1">التير / الوكالة</th>
+                        <th id="th2">التارجت</th>
+                        <th id="th3">الشهر 1<br><span class="month-header">(4)</span></th>
+                        <th id="th4">الشهر 2<br><span class="month-header">(7)</span></th>
+                        <th id="th5">الشهر 3<br><span class="month-header">(10)</span></th>
+                        <th id="th6">الشهر 4<br><span class="month-header">(15)</span></th>
+                        <th id="th7">الشهر 5<br><span class="month-header">(25)</span></th>
+                        <th id="th8">الشهر 6<br><span class="month-header">(40)</span></th>
+                    </tr>
+                </thead>
+                <tbody id="salaryTable"></tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <div class="card-title" id="healthTitle">&#127973; مستوى صحة الوكالة</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th id="hth1">المستوى</th>
+                        <th id="hth2">النسبة</th>
+                        <th id="hth3">الإجراء</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="color:#00ff88">&#1605;&#1605;&#1578;&#1575;&#1586; (Excellent)</td><td>+30%</td><td id="ha1">مكافأة من الراتب</td></tr>
+                    <tr><td style="color:#88ff88">&#1580;&#1610;&#1583; (Good)</td><td>+10%</td><td id="ha2">مكافأة من الراتب</td></tr>
+                    <tr><td style="color:#ffff88">&#1593;&#1575;&#1583;&#1610; (Normal)</td><td>0%</td><td id="ha3">لا توجد مكافأة</td></tr>
+                    <tr><td style="color:#ff6b6b">&#1594;&#1610;&#1585; &#1589;&#1581;&#1610; (Unhealthy)</td><td>-50%</td><td id="ha4">خصم من الراتب</td></tr>
+                    <tr><td style="color:#ff4444;font-weight:bold">&#1578;&#1581;&#1584;&#1610;&#1585; (Warning)</td><td>-100%</td><td id="ha5">سحب راتب + تحذير رسمي</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <div class="card-title" id="rulesTitle">&#9888;&#65039; قواعد الحساب</div>
+            <div class="rule-box">
+                <h4 id="rulesH">&#128290; مقارنة عدد المضيفين برواتب:</h4>
+                <ul>
+                    <li id="r1"><strong>&#9989; راتب كامل:</strong> عدد المضيفين الحالي &#8805; <strong>متطلبات الشهر الحالي</strong></li>
+                    <li id="r2"><strong>&#9888;&#65039; Tier -1:</strong> عدد المضيفين الحالي &lt; <strong>متطلبات الشهر الحالي</strong> <u>و</u> &#8805; <strong>متطلبات الشهر السابق</strong></li>
+                    <li id="r3"><strong>&#10060; $0:</strong> عدد المضيفين الحالي &lt; <strong>متطلبات الشهر الحالي</strong> <u>و</u> &lt; <strong>متطلبات الشهر السابق</strong></li>
+                </ul>
+                <p style="color:#ff69b4; margin-top:10px;" id="note">&#128161; ملاحظة: عدد المضيفين الفعلي للشهر السابق ملوش أي تأثير! بنقارن الحالي بـ &quot;متطلبات الشهرين&quot; فقط.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====== DATA ======
+        var salaryMatrix = [
+            [3, 3, 3, null, null, null],
+            [30, 30, 30, 30, null, null],
+            [30, 60, 90, 90, 90, null],
+            [50, 80, 100, 150, 150, 150],
+            [80, 100, 150, 200, 200, 200],
+            [100, 150, 200, 250, 250, 250]
+        ];
+
+        var monthRequirements = [4, 7, 10, 15, 25, 40];
+
+        var healthBonus = {
+            excellent: 0.30,
+            good: 0.10,
+            normal: 0,
+            unhealthy: -0.50,
+            warning: -1.00
+        };
+
+        var tierNames = ['Tier 1', 'Tier 2', 'Tier 3', 'Tier 4', 'Tier 5', 'Tier 6'];
+        var tierTargets = ['1M', '10M', '30M', '50M', '80M', '100M+'];
+        var tierThresholds = [1000000, 10000000, 30000000, 50000000, 80000000, 100000000];
+
+        var currentLang = 'ar';
+
+        // ====== TRANSLATIONS ======
+        var translations = {
+            ar: {
+                pageTitle: "\uD83D\uDCB0 حاسبة راتب ال BD في Xena شهر 6 2026",
+                pageSub: "BD Salary Calculator - Xena Agency",
+                langBtn: "\uD83C\uDF10 English",
+                formTitle: "\uD83D\uDCCA بيانات الوكالة",
+                tierLabel: "التير (Tier) / الوكالة",
+                monthLabel: "الشهر الحالي (الشهر في الوكالة)",
+                hostsLabel: "عدد المضيفين برواتب (الشهر الحالي)",
+                healthLabel: "مستوى صحة الوكالة",
+                calcBtn: "\uD83D\uDE80 احسب الراتب والمكافأة",
+                rl1: "الراتب الأساسي:",
+                rl2: "نسبة المكافأة/الخصم:",
+                rl3: "قيمة المكافأة/الخصم:",
+                rl4: "الإجمالي (الأساسي + المكافأة):",
+                tableTitle: "\uD83D\uDCB3 جدول الرواتب الأساسية",
+                healthTitle: "\uD83C\uDFE5 مستوى صحة الوكالة",
+                rulesTitle: "\u26A0\uFE0F قواعد الحساب",
+                rulesH: "\uD83D\uDD22 مقارنة عدد المضيفين برواتب:",
+                r1: "<strong>\u2705 راتب كامل:</strong> عدد المضيفين الحالي \u2265 <strong>متطلبات الشهر الحالي</strong>",
+                r2: "<strong>\u26A0\uFE0F Tier -1:</strong> عدد المضيفين الحالي &lt; <strong>متطلبات الشهر الحالي</strong> <u>و</u> \u2265 <strong>متطلبات الشهر السابق</strong>",
+                r3: "<strong>\u274C $0:</strong> عدد المضيفين الحالي &lt; <strong>متطلبات الشهر الحالي</strong> <u>و</u> &lt; <strong>متطلبات الشهر السابق</strong>",
+                note: "\uD83D\uDCA1 ملاحظة: عدد المضيفين الفعلي للشهر السابق ملوش أي تأثير! بنقارن الحالي بـ \u0022متطلبات الشهرين\u0022 فقط.",
+                hostsReqLabel: "\uD83D\uDC65 المضيفين المطلوبين",
+                // Advanced tab
+                tabSimple: "\uD83D\uDCBB البسيط",
+                tabAdvanced: "\u2699\uFE0F المتقدم",
+                advFormTitle: "\u2699\uFE0F حساب راتب الوكالة (متقدم)",
+                advTargetLabel: "\uD83C\uDFC6 تارجت الوكالة (BD)",
+                advCreateDateLabel: "\uD83D\uDCC5 تاريخ إنشاء الوكالة",
+                advCalcDateLabel: "\uD83D\uDCC6 تاريخ الحساب (اليوم)",
+                advHostsLabel: "\uD83D\uDC65 عدد المضيفين برواتب (الشهر الحالي)",
+                advHealthLabel: "\uD83C\uDFE5 مستوى صحة الوكالة",
+                advCalcBtn: "\uD83D\uDE80 احسب الراتب والمكافأة",
+                advRl1: "الراتب الأساسي:",
+                advRl2: "نسبة المكافأة/الخصم:",
+                advRl3: "قيمة المكافأة/الخصم:",
+                advRl4: "الإجمالي (الأساسي + المكافأة):",
+                advErrTarget: "\u26A0\uFE0F يجب إدخال تارجت الوكالة!",
+                advErrDate: "\u26A0\uFE0F يجب إدخال تاريخ إنشاء الوكالة وتاريخ الحساب!",
+                advErrCalcDate: "\u26A0\uFE0F تاريخ الحساب يجب أن يكون بعد تاريخ الإنشاء!",
+                advErrCreateDate: "\u26A0\uFE0F تاريخ إنشاء الوكالة يجب أن يكون في مايو 2026 أو بعده!",
+                advMonthInfo: "الشهر المحسوب: {month} \uD83D\uDCC5 | التير: {tier} \uD83C\uDFC6",
+                th1: "التير / الوكالة",
+                th2: "التارجت",
+                th3: "الشهر 1",
+                th4: "الشهر 2",
+                th5: "الشهر 3",
+                th6: "الشهر 4",
+                th7: "الشهر 5",
+                th8: "الشهر 6",
+                hth1: "المستوى",
+                hth2: "النسبة",
+                hth3: "الإجراء",
+                ha1: "مكافأة من الراتب",
+                ha2: "مكافأة من الراتب",
+                ha3: "لا توجد مكافأة",
+                ha4: "خصم من الراتب",
+                ha5: "سحب راتب + تحذير رسمي",
+                dir: "rtl"
+            },
+            en: {
+                pageTitle: "\uD83D\uDCB0 BD Salary Calculator - Xena June 2026",
+                pageSub: "BD Salary Calculator - Xena Agency",
+                langBtn: "\uD83C\uDF10 العربية",
+                formTitle: "\uD83D\uDCCA Agency Data",
+                tierLabel: "Tier / Agency",
+                monthLabel: "Current Month (Agency Month)",
+                hostsLabel: "Number of Salary Hosts (Current Month)",
+                healthLabel: "Agency Health Level",
+                calcBtn: "\uD83D\uDE80 Calculate Salary & Bonus",
+                rl1: "Base Salary:",
+                rl2: "Bonus/Deduction Rate:",
+                rl3: "Bonus/Deduction Value:",
+                rl4: "Total (Base + Bonus):",
+                tableTitle: "\uD83D\uDCB3 Base Salary Table",
+                healthTitle: "\uD83C\uDFE5 Agency Health Level",
+                rulesTitle: "\u26A0\uFE0F Calculation Rules",
+                rulesH: "\uD83D\uDD22 Salary Hosts Comparison:",
+                r1: "<strong>\u2705 Full Salary:</strong> Current hosts \u2265 <strong>Current month requirements</strong>",
+                r2: "<strong>\u26A0\uFE0F Tier -1:</strong> Current hosts &lt; <strong>Current month requirements</strong> <u>AND</u> \u2265 <strong>Previous month requirements</strong>",
+                r3: "<strong>\u274C $0:</strong> Current hosts &lt; <strong>Current month requirements</strong> <u>AND</u> &lt; <strong>Previous month requirements</strong>",
+                note: "\uD83D\uDCA1 Note: The actual previous month hosts count has no effect! We only compare with \u0022month requirements\u0022.",
+                hostsReqLabel: "\uD83D\uDC65 Required Hosts",
+                // Advanced tab
+                tabSimple: "\uD83D\uDCBB Simple",
+                tabAdvanced: "\u2699\uFE0F Advanced",
+                advFormTitle: "\u2699\uFE0F Agency Salary Calculator (Advanced)",
+                advTargetLabel: "\uD83C\uDFC6 Agency Target (BD)",
+                advCreateDateLabel: "\uD83D\uDCC5 Agency Creation Date",
+                advCalcDateLabel: "\uD83D\uDCC6 Calculation Date (Today)",
+                advHostsLabel: "\uD83D\uDC65 Number of Salary Hosts (Current Month)",
+                advHealthLabel: "\uD83C\uDFE5 Agency Health Level",
+                advCalcBtn: "\uD83D\uDE80 Calculate Salary & Bonus",
+                advRl1: "Base Salary:",
+                advRl2: "Bonus/Deduction Rate:",
+                advRl3: "Bonus/Deduction Value:",
+                advRl4: "Total (Base + Bonus):",
+                advErrTarget: "\u26A0\uFE0F Please enter the agency target!",
+                advErrDate: "\u26A0\uFE0F Please enter both creation and calculation dates!",
+                advErrCalcDate: "\u26A0\uFE0F Calculation date must be after creation date!",
+                advErrCreateDate: "\u26A0\uFE0F Agency creation date must be May 2026 or later!",
+                advMonthInfo: "Calculated Month: {month} \uD83D\uDCC5 | Tier: {tier} \uD83C\uDFC6",
+                th1: "Tier / Agency",
+                th2: "Target",
+                th3: "Month 1",
+                th4: "Month 2",
+                th5: "Month 3",
+                th6: "Month 4",
+                th7: "Month 5",
+                th8: "Month 6",
+                hth1: "Level",
+                hth2: "Rate",
+                hth3: "Action",
+                ha1: "Bonus from salary",
+                ha2: "Bonus from salary",
+                ha3: "No bonus",
+                ha4: "Deduction from salary",
+                ha5: "Salary withdrawal + official warning",
+                dir: "ltr"
+            }
+        };
+
+        // ====== TAB SWITCHING ======
+        function switchTab(tabName) {
+            var tabs = document.querySelectorAll('.tab-content');
+            var btns = document.querySelectorAll('.tab-btn');
+            tabs.forEach(function(t) { t.classList.remove('active'); });
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            document.getElementById('tab-' + tabName).classList.add('active');
+            if (tabName === 'simple') {
+                document.getElementById('tabSimple').classList.add('active');
+            } else {
+                document.getElementById('tabAdvanced').classList.add('active');
+            }
+        }
+
+        // ====== LANGUAGE TOGGLE ======
+        function toggleLang() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            var t = translations[currentLang];
+
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = t.dir;
+
+            var ids = ['pageTitle', 'pageSub', 'langBtn', 'formTitle', 'tierLabel', 'monthLabel',
+                      'hostsLabel', 'healthLabel', 'calcBtn', 'rl1', 'rl2', 'rl3', 'rl4',
+                      'tableTitle', 'healthTitle', 'rulesTitle', 'rulesH', 'r1', 'r2', 'r3', 'note',
+                      'th1', 'th2', 'th3', 'th4', 'th5', 'th6', 'th7', 'th8',
+                      'hth1', 'hth2', 'hth3',
+                      'ha1', 'ha2', 'ha3', 'ha4', 'ha5',
+                      'tabSimple', 'tabAdvanced',
+                      'advFormTitle', 'advTargetLabel', 'advCreateDateLabel', 'advCalcDateLabel',
+                      'advHostsLabel', 'advHealthLabel', 'advCalcBtn',
+                      'advRl1', 'advRl2', 'advRl3', 'advRl4'];
+
+            for (var i = 0; i < ids.length; i++) {
+                var id = ids[i];
+                var el = document.getElementById(id);
+                if (el && t[id]) {
+                    if (id === 'r1' || id === 'r2' || id === 'r3' || id === 'note') {
+                        el.innerHTML = t[id];
+                    } else {
+                        el.textContent = t[id];
+                    }
+                }
+            }
+
+            // Update simple select options
+            var monthSelect = document.getElementById('currentMonth');
+            for (var i = 0; i < 6; i++) {
+                monthSelect.options[i].text = currentLang === 'ar' ? 'الشهر ' + (i+1) : 'Month ' + (i+1);
+            }
+
+            var healthOptionsAr = ['ممتاز (Excellent) - 30% مكافأة', 'جيد (Good) - 10% مكافأة', 'عادي (Normal) - لا توجد مكافأة', 'غير صحي (Unhealthy) - خصم 50%', 'تحذير (Warning) - سحب راتب + تحذير'];
+            var healthOptionsEn = ['Excellent - 30% Bonus', 'Good - 10% Bonus', 'Normal - No Bonus', 'Unhealthy - 50% Deduction', 'Warning - Salary Withdrawal + Warning'];
+
+            var healthSelect = document.getElementById('healthLevel');
+            for (var i = 0; i < 5; i++) {
+                healthSelect.options[i].text = currentLang === 'ar' ? healthOptionsAr[i] : healthOptionsEn[i];
+            }
+
+            var advHealthSelect = document.getElementById('advHealthLevel');
+            for (var i = 0; i < 5; i++) {
+                advHealthSelect.options[i].text = currentLang === 'ar' ? healthOptionsAr[i] : healthOptionsEn[i];
+            }
+
+            renderTable();
+        }
+
+        // ====== TABLE RENDERING ======
+        function renderTable() {
+            var tbody = document.getElementById('salaryTable');
+            var t = translations[currentLang];
+            tbody.innerHTML = '';
+
+            var reqRow = '<tr class="hosts-req-row">';
+            reqRow += '<td class="hosts-req-label">' + t.hostsReqLabel + '</td>';
+            reqRow += '<td style="color:#666">\u2014</td>';
+            for (var j = 0; j < 6; j++) {
+                reqRow += '<td>' + monthRequirements[j] + '</td>';
+            }
+            reqRow += '</tr>';
+            tbody.innerHTML += reqRow;
+
+            var sepRow = '<tr style="height:8px"><td colspan="8" style="border:none; padding:0"></td></tr>';
+            tbody.innerHTML += sepRow;
+
+            for (var i = 0; i < 6; i++) {
+                var row = '<tr>';
+                row += '<td><span class="tier-badge tier-' + (i+1) + '">' + tierNames[i] + '</span></td>';
+                row += '<td style="color:#ffd700">' + tierTargets[i] + '</td>';
+                for (var j = 0; j < 6; j++) {
+                    var val = salaryMatrix[i][j];
+                    row += (val === null) ? '<td class="na-cell">\u2014</td>' : '<td>$' + val + '</td>';
+                }
+                row += '</tr>';
+                tbody.innerHTML += row;
+            }
+        }
+
+        // ====== TARGET INPUT FORMATTING ======
+        function formatTargetInput(input) {
+            var raw = input.value.replace(/,/g, '').replace(/[^0-9]/g, '');
+            input.setAttribute('data-raw', raw);
+            if (raw) {
+                input.value = parseInt(raw).toLocaleString('en-US');
+            } else {
+                input.value = '';
+            }
+        }
+
+        function getTargetValue() {
+            var raw = document.getElementById('advTarget').getAttribute('data-raw');
+            return parseInt(raw) || 0;
+        }
+
+        // ====== TIER FROM TARGET ======
+        // Tier thresholds: 1M, 10M, 30M, 50M, 80M, 100M+
+        function getTierFromTarget(target) {
+            if (target >= 100000000) return 6;
+            if (target >= 80000000) return 5;
+            if (target >= 50000000) return 4;
+            if (target >= 30000000) return 3;
+            if (target >= 10000000) return 2;
+            return 1;
+        }
+
+        // ====== MONTH FROM DATES ======
+        function getMonthFromDates(createDate, calcDate) {
+            var create = new Date(createDate);
+            var calc = new Date(calcDate);
+            var months = (calc.getFullYear() - create.getFullYear()) * 12 + (calc.getMonth() - create.getMonth());
+            var monthNum = months + 1;
+            if (monthNum < 1) monthNum = 1;
+            if (monthNum > 6) monthNum = 6;
+            return monthNum;
+        }
+
+        // ====== SHARED CALCULATION LOGIC ======
+        function doCalculation(tier, currentMonth, currentHosts, health, resultPrefix, detailPrefix) {
+            var currentReq = monthRequirements[currentMonth - 1];
+            var prevReq = currentMonth > 1 ? monthRequirements[currentMonth - 2] : 0;
+            var monthSalary = salaryMatrix[tier - 1][currentMonth - 1];
+            var isAr = currentLang === 'ar';
+
+            var alertBox = document.getElementById(resultPrefix + 'AlertBox');
+            var resultBox = document.getElementById(resultPrefix + 'ResultBox');
+            var calcDetail = document.getElementById(detailPrefix + 'CalcDetail');
+
+            alertBox.className = 'alert';
+            alertBox.style.display = 'none';
+            alertBox.innerHTML = '';
+            calcDetail.innerHTML = '';
+
+            if (monthSalary === null) {
+                alertBox.innerHTML = '\u274C ' + (isAr ? 'هذا التير لا يدعم الشهر ' : 'This tier does not support Month ') + currentMonth + '!';
+                alertBox.className = 'alert alert-error show';
+                alertBox.style.display = 'block';
+                resultBox.className = 'result-box';
+                return null;
+            }
+
+            var baseSalary = 0, message = '', alertClass = '', detailText = '';
+
+            if (currentHosts >= currentReq) {
+                baseSalary = monthSalary;
+                if (isAr) {
+                    message = '\u2705 تم استيفاء عدد المضيفين المطلوب!<br>المضيفين الحاليين: <strong>' + currentHosts + '</strong> \u2265 متطلبات الشهر ' + currentMonth + ': <strong>' + currentReq + '</strong>';
+                    detailText = tierNames[tier-1] + ' (' + tierTargets[tier-1] + ') - الشهر ' + currentMonth + ': راتب كامل = $' + monthSalary;
+                } else {
+                    message = '\u2705 Requirements met!<br>Current hosts: <strong>' + currentHosts + '</strong> \u2265 Month ' + currentMonth + ' requirements: <strong>' + currentReq + '</strong>';
+                    detailText = tierNames[tier-1] + ' (' + tierTargets[tier-1] + ') - Month ' + currentMonth + ': Full salary = $' + monthSalary;
+                }
+                alertClass = 'alert-success';
+            } else if (currentMonth === 1) {
+                baseSalary = 0;
+                if (isAr) {
+                    message = '\u274C الشهر 1: عدد المضيفين (' + currentHosts + ') < المطلوب (' + currentReq + ')<br>ولم يتم استيفاء الشهر الحالي.';
+                    detailText = 'لا يوجد راتب: الشهر 1 غير مستوفي';
+                } else {
+                    message = '\u274C Month 1: Hosts (' + currentHosts + ') < required (' + currentReq + ')<br>Month requirements not met.';
+                    detailText = 'No salary: Month 1 not met';
+                }
+                alertClass = 'alert-error';
+            } else if (currentHosts >= prevReq) {
+                if (tier > 1) {
+                    var prevTierSalary = salaryMatrix[tier - 2][currentMonth - 1];
+                    var fallbackMonth = currentMonth;
+                    // Tier-1 Fallback: if previous tier has no salary for current month,
+                    // use their highest available salary (last non-null month)
+                    if (prevTierSalary === null) {
+                        var prevTierRow = salaryMatrix[tier - 2];
+                        for (var fm = prevTierRow.length - 1; fm >= 0; fm--) {
+                            if (prevTierRow[fm] !== null) {
+                                prevTierSalary = prevTierRow[fm];
+                                fallbackMonth = fm + 1;
+                                break;
+                            }
+                        }
+                    }
+                    if (prevTierSalary !== null) {
+                        baseSalary = prevTierSalary;
+                        if (isAr) {
+                            message = '\u26A0\uFE0F غير مستوفي للشهر الحالي (محتاج ' + currentReq + '، عندك ' + currentHosts + ')<br>لكن عدد المضيفين (' + currentHosts + ') <strong>أعلى أو يساوي</strong> متطلبات الشهر السابق (' + prevReq + ')<br>\u2705 يتم صرف راتب <strong>' + tierNames[tier-2] + ' (' + tierTargets[tier-2] + ')</strong> = $' + prevTierSalary + (fallbackMonth !== currentMonth ? ' (الشهر ' + fallbackMonth + ' - أعلى راتب متاح)' : '');
+                            detailText = tierNames[tier-1] + ' غير مستوفي \u2192 ' + tierNames[tier-2] + ': $' + prevTierSalary + (fallbackMonth !== currentMonth ? ' (شهر ' + fallbackMonth + ')' : '');
+                        } else {
+                            message = '\u26A0\uFE0F Not met for current month (need ' + currentReq + ', have ' + currentHosts + ')<br>But current hosts (' + currentHosts + ') <strong>\u2265</strong> previous month requirements (' + prevReq + ')<br>\u2705 Salary for <strong>' + tierNames[tier-2] + ' (' + tierTargets[tier-2] + ')</strong> = $' + prevTierSalary + (fallbackMonth !== currentMonth ? ' (Month ' + fallbackMonth + ' - highest available)' : '');
+                            detailText = tierNames[tier-1] + ' not met \u2192 ' + tierNames[tier-2] + ': $' + prevTierSalary + (fallbackMonth !== currentMonth ? ' (month ' + fallbackMonth + ')' : '');
+                        }
+                        alertClass = 'alert-warning';
+                    } else {
+                        message = '\u274C ' + tierNames[tier-2] + (isAr ? ' غير متاح لهذا الشهر ولا أي شهر سابق!' : ' not available for this or any previous month!');
+                        alertClass = 'alert-error';
+                    }
+                } else {
+                    message = '\u274C ' + tierNames[tier-1] + (isAr ? ' هو أقل تير متاح! لا يمكن التخفيض.' : ' is the lowest tier! Cannot downgrade.');
+                    alertClass = 'alert-error';
+                }
+            } else {
+                baseSalary = 0;
+                if (isAr) {
+                    message = '\u274C غير مستوفي للشهر الحالي (محتاج ' + currentReq + '، عندك ' + currentHosts + ')<br>وعدد المضيفين (' + currentHosts + ') <strong>أقل من</strong> متطلبات الشهر السابق (' + prevReq + ')<br>\u274C لا يتم صرف أي راتب لهذا الشهر.';
+                    detailText = 'لا يوجد راتب: المضيفين أقل من متطلبات الشهر السابق';
+                } else {
+                    message = '\u274C Not met for current month (need ' + currentReq + ', have ' + currentHosts + ')<br>And current hosts (' + currentHosts + ') <strong>less than</strong> previous month requirements (' + prevReq + ')<br>\u274C No salary for this month.';
+                    detailText = 'No salary: hosts less than previous month requirements';
+                }
+                alertClass = 'alert-error';
+            }
+
+            if (baseSalary === 0) {
+                alertBox.innerHTML = message;
+                alertBox.className = 'alert ' + alertClass + ' show';
+                alertBox.style.display = 'block';
+                resultBox.className = 'result-box';
+                return null;
+            }
+
+            var bonusRate = healthBonus[health];
+            var bonusValue = parseFloat((baseSalary * bonusRate).toFixed(2));
+            var total = parseFloat((baseSalary + bonusValue).toFixed(2));
+
+            document.getElementById(resultPrefix + 'BaseSalary').textContent = '$' + baseSalary.toFixed(2);
+            document.getElementById(resultPrefix + 'BonusPercent').textContent = (bonusRate > 0 ? '+' : '') + (bonusRate * 100) + '%';
+            document.getElementById(resultPrefix + 'BonusValue').textContent = (bonusValue >= 0 ? '+' : '') + '$' + bonusValue.toFixed(2);
+            document.getElementById(resultPrefix + 'TotalSalary').textContent = '$' + total.toFixed(2);
+            calcDetail.textContent = detailText;
+
+            alertBox.innerHTML = message;
+            alertBox.className = 'alert ' + alertClass + ' show';
+            alertBox.style.display = 'block';
+            resultBox.className = 'result-box show';
+
+            return { baseSalary: baseSalary, bonusRate: bonusRate, bonusValue: bonusValue, total: total };
+        }
+
+        // ====== SIMPLE CALCULATE ======
+        function calculate() {
+            var tier = parseInt(document.getElementById('tier').value);
+            var currentMonth = parseInt(document.getElementById('currentMonth').value);
+            var currentHosts = parseInt(document.getElementById('currentHosts').value) || 0;
+            var health = document.getElementById('healthLevel').value;
+            doCalculation(tier, currentMonth, currentHosts, health, '', '');
+        }
+
+        // ====== ADVANCED CALCULATE ======
+        function calculateAdvanced() {
+            var t = translations[currentLang];
+            var target = getTargetValue();
+            var createDate = document.getElementById('advCreateDate').value;
+            var calcDate = document.getElementById('advCalcDate').value;
+            var currentHosts = parseInt(document.getElementById('advCurrentHosts').value) || 0;
+            var health = document.getElementById('advHealthLevel').value;
+            var alertBox = document.getElementById('advAlertBox');
+            var resultBox = document.getElementById('advResultBox');
+
+            alertBox.className = 'alert';
+            alertBox.style.display = 'none';
+            alertBox.innerHTML = '';
+            resultBox.className = 'result-box';
+            document.getElementById('advCalcDetail').innerHTML = '';
+
+            if (!target) {
+                alertBox.innerHTML = t.advErrTarget;
+                alertBox.className = 'alert alert-error show';
+                alertBox.style.display = 'block';
+                return;
+            }
+            if (!createDate || !calcDate) {
+                alertBox.innerHTML = t.advErrDate;
+                alertBox.className = 'alert alert-error show';
+                alertBox.style.display = 'block';
+                return;
+            }
+            if (new Date(calcDate) < new Date(createDate)) {
+                alertBox.innerHTML = t.advErrCalcDate;
+                alertBox.className = 'alert alert-error show';
+                alertBox.style.display = 'block';
+                return;
+            }
+            var createDateObj = new Date(createDate);
+            if (createDateObj.getFullYear() < 2026 || (createDateObj.getFullYear() === 2026 && createDateObj.getMonth() < 4)) {
+                alertBox.innerHTML = t.advErrCreateDate;
+                alertBox.className = 'alert alert-error show';
+                alertBox.style.display = 'block';
+                return;
+            }
+
+            var tier = getTierFromTarget(target);
+            var monthNum = getMonthFromDates(createDate, calcDate);
+
+            // Show calculated info
+            var infoText = t.advMonthInfo.replace('{month}', monthNum).replace('{tier}', tierNames[tier - 1] + ' (' + tierTargets[tier - 1] + ')');
+            document.getElementById('advInfoText').textContent = infoText;
+            document.getElementById('advInfoRow').classList.add('show');
+
+            doCalculation(tier, monthNum, currentHosts, health, 'adv', 'adv');
+        }
+
+        // Initialize
+        renderTable();
+    </script>
+</body>
+</html>
